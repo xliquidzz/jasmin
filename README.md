@@ -1,7 +1,7 @@
 *Jasmin*
 ======
 
-**Easy and simple but powerful knowledge base management with a modern and fast architecture. Java based backend with a RESTful JSON API and a HTML 5 client.**
+**Easy and simple but powerful tool for managing product and sprint backlogs in an agile development process with a modern and fast architecture. Java based backend with a RESTful JSON API and a HTML 5 client.**
 
 *Copyright (C) 2014 Marcus Fihlon*
 
