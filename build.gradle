@@ -25,6 +25,7 @@ repositories {
 project.ext {
     dropwizardVersion = '0.7.1'
     jUnitVersion = '4.11'
+    mysqlConnectorVersion = '5.1.34'
 }
 
 dependencies {
@@ -33,7 +34,8 @@ dependencies {
             'io.dropwizard:dropwizard-jdbi:' + dropwizardVersion,
             'io.dropwizard:dropwizard-client:' + dropwizardVersion,
             'io.dropwizard:dropwizard-auth:' + dropwizardVersion,
-            'io.dropwizard:dropwizard-assets:' + dropwizardVersion
+            'io.dropwizard:dropwizard-assets:' + dropwizardVersion,
+            'mysql:mysql-connector-java:' + mysqlConnectorVersion
     )
     testCompile group: 'junit', name: 'junit', version: jUnitVersion
 }
