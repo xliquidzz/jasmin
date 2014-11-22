@@ -13,7 +13,7 @@ public class App extends Application<JasminConfiguration> {
     private static final Logger LOGGER = LoggerFactory.getLogger(App.class);
 
     public static void main(String[] args) throws Exception {
-        LOGGER.info("Starting application with arguments: %s", args);
+        LOGGER.info("Starting application with arguments: %s", new Object[]{args});
         new App().run(args);
     }
 
