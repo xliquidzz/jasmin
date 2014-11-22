@@ -36,6 +36,10 @@ public class SprintResource {
     @GET
     @Path("/{id}")
     public Response readSprint(@PathParam("id") final long id) {
-        return Response.ok(sprintDAO.readSprintById(id)).build();
+        final Sprint sprint = sprintDAO.readSprintById(id);
+        if (sprint == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        return Response.ok(sprint).build();
     }
 }
