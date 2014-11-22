@@ -1,0 +1,5 @@
+database:
+  driverClass: com.mysql.jdbc.Driver
+  user: jasminuser
+  password: ZHSnNAwuS3USPsMA
+  url: jdbc:mysql://localhost:8889/jasmin
