@@ -1,12 +1,14 @@
 apply plugin: 'idea'
 apply plugin: 'java'
-apply plugin: 'gradle-one-jar'
 apply plugin: 'application'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+// Year and month
 version = '14.11'
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 idea {
     module {
@@ -19,6 +21,19 @@ repositories {
     mavenCentral()
 }
 
+// Set our project variables
+project.ext {
+    dropwizardVersion = '0.7.1'
+    jUnitVersion = '4.11'
+}
+
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile (
+            'io.dropwizard:dropwizard-core:' + dropwizardVersion,
+            'io.dropwizard:dropwizard-jdbi:' + dropwizardVersion,
+            'io.dropwizard:dropwizard-client:' + dropwizardVersion,
+            'io.dropwizard:dropwizard-auth:' + dropwizardVersion,
+            'io.dropwizard:dropwizard-assets:' + dropwizardVersion
+    )
+    testCompile group: 'junit', name: 'junit', version: jUnitVersion
 }
