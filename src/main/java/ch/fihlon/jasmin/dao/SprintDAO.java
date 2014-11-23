@@ -22,4 +22,11 @@ public interface SprintDAO {
     @Mapper(SprintMapper.class)
     @SqlQuery("SELECT * FROM sprint WHERE id = :id")
     Sprint readSprintById(@Bind("id") final long id);
+
+    @SqlUpdate("UPDATE sprint SET title=:title, start=:start, end=:end WHERE id=:id")
+    void updateSprint(
+            @Bind("id") final long id,
+            @Bind("title") final String title,
+            @Bind("start") final Date start,
+            @Bind("end") final Date end);
 }
