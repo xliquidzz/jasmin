@@ -29,4 +29,7 @@ public interface SprintDAO {
             @Bind("title") final String title,
             @Bind("start") final Date start,
             @Bind("end") final Date end);
+
+    @SqlUpdate("DELETE FROM sprint WHERE id = :id")
+    void deleteSprint(@Bind("id") final long id);
 }
