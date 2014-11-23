@@ -5,3 +5,10 @@ CREATE TABLE `sprint` (
  `end` date NOT NULL,
  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8
+
+CREATE TABLE `team` (
+ `id` bigint(20) NOT NULL AUTO_INCREMENT,
+ `name` varchar(100) NOT NULL,
+ PRIMARY KEY (`id`),
+ UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8
