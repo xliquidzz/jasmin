@@ -1,6 +1,7 @@
 package ch.fihlon.jasmin;
 
 import ch.fihlon.jasmin.resources.SprintResource;
+import ch.fihlon.jasmin.resources.TeamResource;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
 import io.dropwizard.Application;
@@ -33,5 +34,6 @@ public class App extends Application<JasminConfiguration> {
         final DBI dbi = factory.build(environment, configuration.getDataSourceFactory(), "mysql");
 
         environment.jersey().register(new SprintResource(dbi));
+        environment.jersey().register(new TeamResource(dbi));
     }
 }
