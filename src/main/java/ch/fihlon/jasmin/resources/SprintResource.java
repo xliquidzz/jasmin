@@ -6,6 +6,7 @@ import org.skife.jdbi.v2.DBI;
 
 import javax.annotation.Nonnull;
 import javax.validation.Valid;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -52,5 +53,15 @@ public class SprintResource {
         }
         sprintDAO.updateSprint(id, sprint.getTitle(), Date.valueOf(sprint.getStart()), Date.valueOf(sprint.getEnd()));
         return Response.ok(new Sprint(id, sprint.getTitle(), sprint.getStart(), sprint.getEnd())).build();
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public Response deleteSprint(@PathParam("id") final long id) {
+        if (sprintDAO.readSprintById(id) == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        sprintDAO.deleteSprint(id);
+        return Response.noContent().build();
     }
 }
