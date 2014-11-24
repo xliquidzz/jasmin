@@ -2,10 +2,12 @@ package ch.fihlon.jasmin.resources;
 
 import ch.fihlon.jasmin.dao.TeamDAO;
 import ch.fihlon.jasmin.representations.Team;
+
 import org.skife.jdbi.v2.DBI;
 
 import javax.annotation.Nonnull;
 import javax.validation.Valid;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -13,6 +15,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -41,5 +44,14 @@ public class TeamResource {
         }
         return Response.ok(team).build();
     }
-
+    
+    @DELETE
+    @Path("/{id}")
+    public Response deleteTeam(@PathParam("id") final long id) {
+    	if (teamDAO.readTeamById(id) == null) {
+			return Response.status(Response.Status.NOT_FOUND).build();
+		}
+    	teamDAO.deleteTeamById(id);
+    	return Response.noContent().build();
+    }
 }

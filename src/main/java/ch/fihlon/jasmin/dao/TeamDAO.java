@@ -17,4 +17,7 @@ public interface TeamDAO {
     @Mapper(TeamMapper.class)
     @SqlQuery("SELECT * FROM team WHERE id = :id")
     Team readTeamById(@Bind("id") final long id);
+    
+    @SqlUpdate("DELETE FROM team WHERE id = :id")
+    void deleteTeamById(@Bind("id") final long id);
 }
