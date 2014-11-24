@@ -8,6 +8,7 @@ import javax.annotation.Nonnull;
 import javax.validation.Valid;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -42,4 +43,13 @@ public class TeamResource {
         return Response.ok(team).build();
     }
 
+    @PUT
+    @Path("/{id}")
+    public Response updateTeam(@PathParam("id") final long id, @Valid Team team) {
+        if (teamDAO.readTeamById(id) == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        teamDAO.updateTeam(id, team.getName());
+        return Response.ok(new Team(id, team.getName())).build();
+    }
 }

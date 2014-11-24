@@ -17,4 +17,7 @@ public interface TeamDAO {
     @Mapper(TeamMapper.class)
     @SqlQuery("SELECT * FROM team WHERE id = :id")
     Team readTeamById(@Bind("id") final long id);
+
+    @SqlUpdate("UPDATE team SET name=:name WHERE id=:id")
+    void updateTeam(@Bind("id") final long id, @Bind("name") final String name);
 }
