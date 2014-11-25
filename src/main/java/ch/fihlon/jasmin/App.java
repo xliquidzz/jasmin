@@ -1,5 +1,6 @@
 package ch.fihlon.jasmin;
 
+import ch.fihlon.jasmin.resources.ItemResource;
 import ch.fihlon.jasmin.resources.SprintResource;
 import ch.fihlon.jasmin.resources.TeamResource;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,9 +17,15 @@ public class App extends Application<JasminConfiguration> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(App.class);
 
+    private static DBI dbi;
+
     public static void main(String[] args) throws Exception {
         LOGGER.info("Starting application with arguments: %s", new Object[]{args});
         new App().run(args);
+    }
+
+    public static DBI getDBI() {
+        return dbi;
     }
 
     @Override
@@ -31,9 +38,10 @@ public class App extends Application<JasminConfiguration> {
     @Override
     public void run(JasminConfiguration configuration, Environment environment) throws Exception {
         final DBIFactory factory = new DBIFactory();
-        final DBI dbi = factory.build(environment, configuration.getDataSourceFactory(), "mysql");
+        dbi = factory.build(environment, configuration.getDataSourceFactory(), "mysql");
 
         environment.jersey().register(new SprintResource(dbi));
         environment.jersey().register(new TeamResource(dbi));
+        environment.jersey().register(new ItemResource(dbi));
     }
 }
