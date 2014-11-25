@@ -20,4 +20,7 @@ public interface TeamDAO {
 
     @SqlUpdate("UPDATE team SET name=:name WHERE id=:id")
     void updateTeam(@Bind("id") final long id, @Bind("name") final String name);
+    
+    @SqlUpdate("DELETE FROM team WHERE id = :id")
+    void deleteTeam(@Bind("id") final long id);
 }

@@ -6,6 +6,7 @@ import org.skife.jdbi.v2.DBI;
 
 import javax.annotation.Nonnull;
 import javax.validation.Valid;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -51,5 +52,15 @@ public class TeamResource {
         }
         teamDAO.updateTeam(id, team.getName());
         return Response.ok(new Team(id, team.getName())).build();
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public Response deleteTeam(@PathParam("id") final long id) {
+        if (teamDAO.readTeamById(id) == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        teamDAO.deleteTeam(id);
+        return Response.noContent().build();
     }
 }
