@@ -6,8 +6,10 @@ import org.skife.jdbi.v2.DBI;
 
 import javax.annotation.Nonnull;
 import javax.validation.Valid;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -28,5 +30,15 @@ public class ItemResource {
     public Response createItem(@Valid final Item item) throws URISyntaxException {
         final long newItemId = itemDAO.createItem(item.getTitle(), item.getTeamId());
         return Response.created(new URI(String.valueOf(newItemId))).build();
+    }
+
+    @GET
+    @Path("/{id}")
+    public Response readItem(@PathParam("id") final long id) {
+        final Item item = itemDAO.readItemById(id);
+        if (item == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        return Response.ok(item).build();
     }
 }
