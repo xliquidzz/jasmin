@@ -17,4 +17,7 @@ public interface ItemDAO {
     @Mapper(ItemMapper.class)
     @SqlQuery("SELECT * FROM item WHERE id = :id")
     Item readItemById(@Bind("id") final long id);
+
+    @SqlUpdate("UPDATE item SET title=:title, team_id=:teamId WHERE id=:id")
+    void updateItem(@Bind("id") final long id, @Bind("title") final String title, @Bind("teamId") final long teamId);
 }
