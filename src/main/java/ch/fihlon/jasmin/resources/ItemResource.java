@@ -2,11 +2,11 @@ package ch.fihlon.jasmin.resources;
 
 import ch.fihlon.jasmin.dao.ItemDAO;
 import ch.fihlon.jasmin.representations.Item;
-import ch.fihlon.jasmin.representations.Team;
 import org.skife.jdbi.v2.DBI;
 
 import javax.annotation.Nonnull;
 import javax.validation.Valid;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -51,5 +51,15 @@ public class ItemResource {
         }
         itemDAO.updateItem(id, item.getTitle(), item.getTeamId());
         return Response.ok(new Item(id, item.getTitle(), item.getTeamId())).build();
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public Response deleteItem(@PathParam("id") final long id) {
+        if (itemDAO.readItemById(id) == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        itemDAO.deleteItem(id);
+        return Response.noContent().build();
     }
 }

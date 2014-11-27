@@ -20,4 +20,7 @@ public interface ItemDAO {
 
     @SqlUpdate("UPDATE item SET title=:title, team_id=:teamId WHERE id=:id")
     void updateItem(@Bind("id") final long id, @Bind("title") final String title, @Bind("teamId") final long teamId);
+
+    @SqlUpdate("DELETE FROM item WHERE id = :id")
+    void deleteItem(@Bind("id") final long id);
 }
