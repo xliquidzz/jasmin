@@ -10,7 +10,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class Item {
+public class BacklogItem {
 
     private final long id;
 
@@ -20,11 +20,11 @@ public class Item {
 
     private final long teamId;
 
-    public Item() {
+    public BacklogItem() {
         this(0, null, 0);
     }
 
-    public Item(@Nonnull final long id, @Nonnull final String title, @Nonnull final long teamId) {
+    public BacklogItem(@Nonnull final long id, @Nonnull final String title, @Nonnull final long teamId) {
         super();
         this.id = id;
         this.title = title;

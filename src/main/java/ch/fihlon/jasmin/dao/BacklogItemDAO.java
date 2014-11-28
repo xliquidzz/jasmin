@@ -1,7 +1,7 @@
 package ch.fihlon.jasmin.dao;
 
-import ch.fihlon.jasmin.dao.mappers.ItemMapper;
-import ch.fihlon.jasmin.representations.Item;
+import ch.fihlon.jasmin.dao.mappers.BacklogItemMapper;
+import ch.fihlon.jasmin.representations.BacklogItem;
 import org.skife.jdbi.v2.sqlobject.Bind;
 import org.skife.jdbi.v2.sqlobject.GetGeneratedKeys;
 import org.skife.jdbi.v2.sqlobject.SqlQuery;
@@ -12,28 +12,29 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public interface ItemDAO {
+public interface BacklogItemDAO {
 
     @GetGeneratedKeys
-    @SqlUpdate("INSERT INTO item (id, title, team_id) VALUES (NULL, :title, :teamId)")
+    @SqlUpdate("INSERT INTO backlog_item (id, title, team_id) VALUES (NULL, :title, :teamId)")
     @Nullable long createItem(
             @Bind("title") @Nonnull final String title,
             @Bind("teamId") @Nonnull final long teamId);
 
-    @Mapper(ItemMapper.class)
-    @SqlQuery("SELECT * FROM item WHERE id = :id")
-    @Nullable Item readItemById(@Bind("id") @Nonnull final long id);
+    @Mapper(BacklogItemMapper.class)
+    @SqlQuery("SELECT * FROM backlog_item WHERE id = :id")
+    @Nullable
+    BacklogItem readItemById(@Bind("id") @Nonnull final long id);
 
-    @Mapper(ItemMapper.class)
+    @Mapper(BacklogItemMapper.class)
     @SqlQuery("SELECT * FROM item WHERE team_id = :teamId")
-    @Nonnull List<Item> readItemsByTeamId(@Bind("teamId") @Nonnull final long teamId);
+    @Nonnull List<BacklogItem> readItemsByTeamId(@Bind("teamId") @Nonnull final long teamId);
 
-    @SqlUpdate("UPDATE item SET title=:title, team_id=:teamId WHERE id=:id")
+    @SqlUpdate("UPDATE backlog_item SET title=:title, team_id=:teamId WHERE id=:id")
     void updateItem(
             @Bind("id") @Nonnull final long id,
             @Bind("title") @Nonnull final String title,
             @Bind("teamId") @Nonnull final long teamId);
 
-    @SqlUpdate("DELETE FROM item WHERE id = :id")
+    @SqlUpdate("DELETE FROM backlog_item WHERE id = :id")
     void deleteItem(@Bind("id") @Nonnull final long id);
 }

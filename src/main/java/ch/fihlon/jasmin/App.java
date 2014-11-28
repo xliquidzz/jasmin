@@ -1,6 +1,6 @@
 package ch.fihlon.jasmin;
 
-import ch.fihlon.jasmin.resources.ItemResource;
+import ch.fihlon.jasmin.resources.BacklogItemResource;
 import ch.fihlon.jasmin.resources.SprintResource;
 import ch.fihlon.jasmin.resources.TeamResource;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -45,6 +45,6 @@ public class App extends Application<JasminConfiguration> {
 
         environment.jersey().register(new SprintResource(dbi));
         environment.jersey().register(new TeamResource(dbi));
-        environment.jersey().register(new ItemResource(dbi));
+        environment.jersey().register(new BacklogItemResource(dbi));
     }
 }
