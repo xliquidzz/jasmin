@@ -1,7 +1,10 @@
 package ch.fihlon.jasmin.resources;
 
+import ch.fihlon.jasmin.App;
+import ch.fihlon.jasmin.dao.ItemDAO;
 import ch.fihlon.jasmin.dao.TeamDAO;
 import ch.fihlon.jasmin.representations.Team;
+import io.dropwizard.jersey.errors.ErrorMessage;
 import org.skife.jdbi.v2.DBI;
 
 import javax.annotation.Nonnull;
@@ -60,6 +63,13 @@ public class TeamResource {
         if (teamDAO.readTeamById(id) == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
+
+        // TODO #27 Architecture: Don't use DBI in resource classes
+        if (!App.getDBI().onDemand(ItemDAO.class).readItemsByTeamId(id).isEmpty()) {
+            return  Response.status(Response.Status.PRECONDITION_FAILED)
+                    .entity(new ErrorMessage("Teams with assigned items can't be deleted!")).build();
+        }
+
         teamDAO.deleteTeam(id);
         return Response.noContent().build();
     }

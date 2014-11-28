@@ -43,6 +43,7 @@ public class ItemResource {
         }
         return Response.ok(item).build();
     }
+
     @PUT
     @Path("/{id}")
     public @Nonnull Response updateItem(@PathParam("id") @Nonnull final long id, @Valid @Nonnull Item item) {
