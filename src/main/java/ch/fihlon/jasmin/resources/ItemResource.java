@@ -29,14 +29,14 @@ public class ItemResource {
     }
 
     @POST
-    public Response createItem(@Valid final Item item) throws URISyntaxException {
+    public @Nonnull Response createItem(@Valid @Nonnull final Item item) throws URISyntaxException {
         final long newItemId = itemDAO.createItem(item.getTitle(), item.getTeamId());
         return Response.created(new URI(String.valueOf(newItemId))).build();
     }
 
     @GET
     @Path("/{id}")
-    public Response readItem(@PathParam("id") final long id) {
+    public @Nonnull Response readItem(@PathParam("id") @Nonnull final long id) {
         final Item item = itemDAO.readItemById(id);
         if (item == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
@@ -45,7 +45,7 @@ public class ItemResource {
     }
     @PUT
     @Path("/{id}")
-    public Response updateItem(@PathParam("id") final long id, @Valid Item item) {
+    public @Nonnull Response updateItem(@PathParam("id") @Nonnull final long id, @Valid @Nonnull Item item) {
         if (itemDAO.readItemById(id) == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
@@ -55,7 +55,7 @@ public class ItemResource {
 
     @DELETE
     @Path("/{id}")
-    public Response deleteItem(@PathParam("id") final long id) {
+    public @Nonnull Response deleteItem(@PathParam("id") @Nonnull final long id) {
         if (itemDAO.readItemById(id) == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }

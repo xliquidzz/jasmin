@@ -29,14 +29,14 @@ public class TeamResource {
     }
 
     @POST
-    public Response createTeam(@Valid final Team team) throws URISyntaxException {
+    public @Nonnull Response createTeam(@Valid @Nonnull final Team team) throws URISyntaxException {
         final long newTeamId = teamDAO.createTeam(team.getName());
         return Response.created(new URI(String.valueOf(newTeamId))).build();
     }
 
     @GET
     @Path("/{id}")
-    public Response readTeam(@PathParam("id") final long id) {
+    public @Nonnull Response readTeam(@PathParam("id") @Nonnull final long id) {
         final Team team = teamDAO.readTeamById(id);
         if (team == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
@@ -46,7 +46,7 @@ public class TeamResource {
 
     @PUT
     @Path("/{id}")
-    public Response updateTeam(@PathParam("id") final long id, @Valid Team team) {
+    public @Nonnull Response updateTeam(@PathParam("id") @Nonnull final long id, @Valid @Nonnull final Team team) {
         if (teamDAO.readTeamById(id) == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
@@ -56,7 +56,7 @@ public class TeamResource {
 
     @DELETE
     @Path("/{id}")
-    public Response deleteTeam(@PathParam("id") final long id) {
+    public @Nonnull Response deleteTeam(@PathParam("id") @Nonnull final long id) {
         if (teamDAO.readTeamById(id) == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }

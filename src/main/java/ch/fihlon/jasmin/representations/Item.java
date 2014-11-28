@@ -7,6 +7,9 @@ import io.dropwizard.validation.ValidationMethod;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 public class Item {
 
     private final long id;
@@ -21,28 +24,28 @@ public class Item {
         this(0, null, 0);
     }
 
-    public Item(final long id, final String title, final long teamId) {
+    public Item(@Nonnull final long id, @Nonnull final String title, @Nonnull final long teamId) {
         super();
         this.id = id;
         this.title = title;
         this.teamId = teamId;
     }
 
-    public long getId() {
+    public @Nullable long getId() {
         return id;
     }
 
-    public String getTitle() {
+    public @Nullable String getTitle() {
         return title;
     }
 
-    public long getTeamId() {
+    public @Nullable long getTeamId() {
         return teamId;
     }
 
     @JsonIgnore
     @ValidationMethod(message = "team id is not valid")
-    public boolean isValidTeamId() {
+    public @Nonnull boolean isValidTeamId() {
         // TODO #27 Architecture: Don't use DBI in representation classes
         return App.getDBI().onDemand(TeamDAO.class).readTeamById(teamId) != null;
     }

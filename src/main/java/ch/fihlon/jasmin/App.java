@@ -13,30 +13,33 @@ import org.skife.jdbi.v2.DBI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 public class App extends Application<JasminConfiguration> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(App.class);
 
     private static DBI dbi;
 
-    public static void main(String[] args) throws Exception {
+    public static void main(@Nonnull final String[] args) throws Exception {
         LOGGER.info("Starting application with arguments: %s", new Object[]{args});
         new App().run(args);
     }
 
-    public static DBI getDBI() {
+    public static @Nullable DBI getDBI() {
         return dbi;
     }
 
     @Override
-    public void initialize(Bootstrap<JasminConfiguration> bootstrap) {
+    public void initialize(@Nonnull final Bootstrap<JasminConfiguration> bootstrap) {
         // Register additional Jackson modules
         final ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JSR310Module());
     }
 
     @Override
-    public void run(JasminConfiguration configuration, Environment environment) throws Exception {
+    public void run(@Nonnull final JasminConfiguration configuration, @Nonnull final Environment environment) throws Exception {
         final DBIFactory factory = new DBIFactory();
         dbi = factory.build(environment, configuration.getDataSourceFactory(), "mysql");
 
