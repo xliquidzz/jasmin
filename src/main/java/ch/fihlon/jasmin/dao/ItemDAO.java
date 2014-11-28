@@ -10,6 +10,7 @@ import org.skife.jdbi.v2.sqlobject.customizers.Mapper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.List;
 
 public interface ItemDAO {
 
@@ -22,6 +23,10 @@ public interface ItemDAO {
     @Mapper(ItemMapper.class)
     @SqlQuery("SELECT * FROM item WHERE id = :id")
     @Nullable Item readItemById(@Bind("id") @Nonnull final long id);
+
+    @Mapper(ItemMapper.class)
+    @SqlQuery("SELECT * FROM item WHERE team_id = :teamId")
+    @Nonnull List<Item> readItemsByTeamId(@Bind("teamId") @Nonnull final long teamId);
 
     @SqlUpdate("UPDATE item SET title=:title, team_id=:teamId WHERE id=:id")
     void updateItem(
