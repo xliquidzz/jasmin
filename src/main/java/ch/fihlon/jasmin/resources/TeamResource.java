@@ -1,7 +1,7 @@
 package ch.fihlon.jasmin.resources;
 
 import ch.fihlon.jasmin.App;
-import ch.fihlon.jasmin.dao.ItemDAO;
+import ch.fihlon.jasmin.dao.BacklogItemDAO;
 import ch.fihlon.jasmin.dao.TeamDAO;
 import ch.fihlon.jasmin.representations.Team;
 import io.dropwizard.jersey.errors.ErrorMessage;
@@ -65,7 +65,7 @@ public class TeamResource {
         }
 
         // TODO #27 Architecture: Don't use DBI in resource classes
-        if (!App.getDBI().onDemand(ItemDAO.class).readItemsByTeamId(id).isEmpty()) {
+        if (!App.getDBI().onDemand(BacklogItemDAO.class).readItemsByTeamId(id).isEmpty()) {
             return  Response.status(Response.Status.PRECONDITION_FAILED)
                     .entity(new ErrorMessage("Teams with assigned items can't be deleted!")).build();
         }
