@@ -30,14 +30,15 @@ public class SprintResource {
     }
 
     @POST
-    public Response createSprint(@Valid final Sprint sprint) throws URISyntaxException {
-        final long newSprintId = sprintDAO.createSprint(sprint.getTitle(), Date.valueOf(sprint.getStart()), Date.valueOf(sprint.getEnd()));
+    public @Nonnull Response createSprint(@Valid @Nonnull final Sprint sprint) throws URISyntaxException {
+        final long newSprintId = sprintDAO.createSprint(
+                sprint.getTitle(), Date.valueOf(sprint.getStart()), Date.valueOf(sprint.getEnd()));
         return Response.created(new URI(String.valueOf(newSprintId))).build();
     }
 
     @GET
     @Path("/{id}")
-    public Response readSprint(@PathParam("id") final long id) {
+    public @Nonnull Response readSprint(@PathParam("id") @Nonnull final long id) {
         final Sprint sprint = sprintDAO.readSprintById(id);
         if (sprint == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
@@ -47,7 +48,8 @@ public class SprintResource {
 
     @PUT
     @Path("/{id}")
-    public Response updateSprint(@PathParam("id") final long id, @Valid final Sprint sprint) throws URISyntaxException {
+    public @Nonnull Response updateSprint(@PathParam("id") @Nonnull final long id, @Valid @Nonnull final Sprint sprint)
+            throws URISyntaxException {
         if (sprintDAO.readSprintById(id) == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
@@ -57,7 +59,7 @@ public class SprintResource {
 
     @DELETE
     @Path("/{id}")
-    public Response deleteSprint(@PathParam("id") final long id) {
+    public @Nonnull Response deleteSprint(@PathParam("id") @Nonnull final long id) {
         if (sprintDAO.readSprintById(id) == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }

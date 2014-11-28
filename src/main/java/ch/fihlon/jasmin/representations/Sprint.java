@@ -5,6 +5,8 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
@@ -26,7 +28,8 @@ public class Sprint {
         this(0, null, null, null);
     }
 
-    public Sprint(final long id, final String title, final LocalDate start, final LocalDate end) {
+    public Sprint(@Nonnull final long id, @Nonnull final String title,
+                  @Nonnull final LocalDate start, @Nonnull final LocalDate end) {
         super();
         this.id = id;
         this.title = title;
@@ -34,21 +37,21 @@ public class Sprint {
         this.end = end;
     }
 
-    public long getId() {
+    public @Nullable long getId() {
         return id;
     }
 
-    public String getTitle() {
+    public @Nullable String getTitle() {
         return title;
     }
 
     @JsonDeserialize(using = LocalDateDeserializer.class)
-    public LocalDate getStart() {
+    public @Nullable LocalDate getStart() {
         return start;
     }
 
     @JsonDeserialize(using = LocalDateDeserializer.class)
-    public LocalDate getEnd() {
+    public @Nullable LocalDate getEnd() {
         return end;
     }
 }

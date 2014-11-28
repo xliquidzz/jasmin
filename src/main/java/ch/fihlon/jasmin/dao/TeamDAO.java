@@ -8,19 +8,22 @@ import org.skife.jdbi.v2.sqlobject.SqlQuery;
 import org.skife.jdbi.v2.sqlobject.SqlUpdate;
 import org.skife.jdbi.v2.sqlobject.customizers.Mapper;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 public interface TeamDAO {
 
     @GetGeneratedKeys
     @SqlUpdate("INSERT INTO team (id, name) VALUES (NULL, :name)")
-    long createTeam(@Bind("name") final String name);
+    @Nullable long createTeam(@Bind("name") @Nonnull final String name);
 
     @Mapper(TeamMapper.class)
     @SqlQuery("SELECT * FROM team WHERE id = :id")
-    Team readTeamById(@Bind("id") final long id);
+    @Nullable Team readTeamById(@Bind("id") @Nonnull final long id);
 
     @SqlUpdate("UPDATE team SET name=:name WHERE id=:id")
-    void updateTeam(@Bind("id") final long id, @Bind("name") final String name);
+    void updateTeam(@Bind("id") @Nonnull final long id, @Bind("name") @Nonnull final String name);
     
     @SqlUpdate("DELETE FROM team WHERE id = :id")
-    void deleteTeam(@Bind("id") final long id);
+    void deleteTeam(@Bind("id") @Nonnull final long id);
 }
