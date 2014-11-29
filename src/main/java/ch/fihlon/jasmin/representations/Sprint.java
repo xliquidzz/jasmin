@@ -1,5 +1,7 @@
 package ch.fihlon.jasmin.representations;
 
+import ch.fihlon.jasmin.App;
+import ch.fihlon.jasmin.dao.BacklogItemDAO;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import org.hibernate.validator.constraints.Length;
@@ -9,6 +11,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.List;
 
 public class Sprint {
 
@@ -53,5 +56,10 @@ public class Sprint {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     public @Nullable LocalDate getEnd() {
         return end;
+    }
+
+    public List<BacklogItem> getBacklogItems() {
+        // TODO #27 Architecture: Don't use DBI in representation classes
+        return App.getDBI().onDemand(BacklogItemDAO.class).readBacklogItemsBySprintId(getId());
     }
 }
