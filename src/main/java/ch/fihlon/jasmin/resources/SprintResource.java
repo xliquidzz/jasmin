@@ -1,7 +1,10 @@
 package ch.fihlon.jasmin.resources;
 
+import ch.fihlon.jasmin.App;
+import ch.fihlon.jasmin.dao.BacklogItemDAO;
 import ch.fihlon.jasmin.dao.SprintDAO;
 import ch.fihlon.jasmin.representations.Sprint;
+import io.dropwizard.jersey.errors.ErrorMessage;
 import org.skife.jdbi.v2.DBI;
 
 import javax.annotation.Nonnull;
@@ -63,7 +66,24 @@ public class SprintResource {
         if (sprintDAO.readSprintById(id) == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
+
+        // TODO #27 Architecture: Don't use DBI in resource classes
+        if (!App.getDBI().onDemand(BacklogItemDAO.class).readBacklogItemsBySprintId(id).isEmpty()) {
+            return  Response.status(Response.Status.PRECONDITION_FAILED)
+                    .entity(new ErrorMessage("Sprints with assigned backlog items can't be deleted!")).build();
+        }
+
         sprintDAO.deleteSprint(id);
         return Response.noContent().build();
+    }
+
+    @GET
+    @Path("/{id}/backlogItems")
+    public @Nonnull Response readSprintItems(@PathParam("id") @Nonnull final long id) {
+        final Sprint sprint = sprintDAO.readSprintById(id);
+        if (sprint == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        return Response.ok(sprint.getBacklogItems()).build();
     }
 }

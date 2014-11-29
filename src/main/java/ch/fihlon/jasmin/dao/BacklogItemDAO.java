@@ -22,12 +22,11 @@ public interface BacklogItemDAO {
 
     @Mapper(BacklogItemMapper.class)
     @SqlQuery("SELECT * FROM backlog_item WHERE id = :id")
-    @Nullable
-    BacklogItem readItemById(@Bind("id") @Nonnull final long id);
+    @Nullable BacklogItem readItemById(@Bind("id") @Nonnull final long id);
 
     @Mapper(BacklogItemMapper.class)
-    @SqlQuery("SELECT * FROM item WHERE team_id = :teamId")
-    @Nonnull List<BacklogItem> readItemsByTeamId(@Bind("teamId") @Nonnull final long teamId);
+    @SqlQuery("SELECT * FROM backlog_item WHERE team_id = :teamId")
+    @Nonnull List<BacklogItem> readBacklogItemsByTeamId(@Bind("teamId") @Nonnull final long teamId);
 
     @SqlUpdate("UPDATE backlog_item SET title=:title, team_id=:teamId WHERE id=:id")
     void updateItem(
@@ -37,4 +36,8 @@ public interface BacklogItemDAO {
 
     @SqlUpdate("DELETE FROM backlog_item WHERE id = :id")
     void deleteItem(@Bind("id") @Nonnull final long id);
+
+    @Mapper(BacklogItemMapper.class)
+    @SqlQuery("SELECT * FROM backlog_item WHERE sprint_id = :sprintId")
+    @Nonnull List<BacklogItem> readBacklogItemsBySprintId(@Bind("sprintId") @Nonnull final long id);
 }

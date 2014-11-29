@@ -65,9 +65,9 @@ public class TeamResource {
         }
 
         // TODO #27 Architecture: Don't use DBI in resource classes
-        if (!App.getDBI().onDemand(BacklogItemDAO.class).readItemsByTeamId(id).isEmpty()) {
+        if (!App.getDBI().onDemand(BacklogItemDAO.class).readBacklogItemsByTeamId(id).isEmpty()) {
             return  Response.status(Response.Status.PRECONDITION_FAILED)
-                    .entity(new ErrorMessage("Teams with assigned items can't be deleted!")).build();
+                    .entity(new ErrorMessage("Teams with assigned backlog items can't be deleted!")).build();
         }
 
         teamDAO.deleteTeam(id);
