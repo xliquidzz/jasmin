@@ -23,3 +23,12 @@ CREATE TABLE `backlog_item` (
  KEY `sprnt_id` (`sprnt_id`),
  CONSTRAINT `backlog_item_team` FOREIGN KEY (`team_id`) REFERENCES `team` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8
+
+CREATE TABLE `user` (
+ `id` bigint(20) NOT NULL AUTO_INCREMENT,
+ `firstname` varchar(100) NOT NULL,
+ `lastname` varchar(100) NOT NULL,
+ `email` varchar(100) NOT NULL,
+ PRIMARY KEY (`id`),
+ UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8
